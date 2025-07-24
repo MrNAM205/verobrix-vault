@@ -1,0 +1,23 @@
+{
+  "scan_paths": {
+    "mobile": [
+      "/storage/emulated/0/",
+      "/sdcard/",
+      "/data/media/0/",
+      "/data/data/com.termux/files/home/Downloads/"
+    ],
+    "desktop": [
+      "/mnt/storage/",
+      "/media/salvage_drive/",
+      "/home/sirrobert/vaults/"
+    ]
+  },
+  "file_types": {
+    "images": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
+    "scripts": [".sh", ".py", ".js", ".bat"],
+    "documents": [".txt", ".md", ".pdf", ".docx"],
+    "archives": [".zip", ".tar", ".gz", ".rar", ".7z"],
+    "logs": [".log", ".out", ".trace"],
+    "configs": [".json", ".yaml", ".yml", ".ini"]
+  }
+}

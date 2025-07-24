@@ -1,0 +1,8 @@
+{
+  "keywords": {
+    "legal": ["ucc", "usc", "cfr", "resolution", "legal tender", "payment coupon", "check", "cheque", "contract", "affidavit", "liability", "statute"],
+    "technology": ["cpu", "harddrive", "firmware", "bios", "code", "script", "kernel", "debug", "init", "runtime", "config"],
+    "sovereignty": ["salvage", "generator", "battery", "rooted", "journal", "reflection", "self-hosted", "authorship", "energy"]
+  },
+  "priority_tags": ["urgent", "legacy", "project", "contradiction", "scanworthy"]
+}
