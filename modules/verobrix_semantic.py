@@ -1,63 +1,69 @@
 #!/usr/bin/env python3
-import os, json
+import json
 from pathlib import Path
 
-base = Path.home() / "verobrix"
-scan_path = base / "output/vault_scan.json"
-themes_path = base / "config/verobrix_themes.json"
-output_path = base / "output/vault_semantics.json"
+BASE = Path.home() / "verobrix"
+SCAN_FILE = BASE / "output/rootscan_results.json"
+KEYWORDS_FILE = BASE / "config/domain_keywords.json"
+OUTPUT = BASE / "output/semantic_reflection.json"
 
-def load_json(path):
+def load_scan():
     try:
-        with open(path) as f:
+        with open(SCAN_FILE) as f:
             return json.load(f)
     except:
-        print(f"⚠️ Cannot load {path.name}")
+        print("⚠️ Scan results not found.")
         return {}
 
-def match_keywords(text, vocab):
-    found = []
-    text = text.lower()
-    for theme, words in vocab.items():
-        if any(w.lower() in text for w in words):
-            found.append(theme)
-    return found
+def load_keywords(tag):
+    try:
+        with open(KEYWORDS_FILE) as f:
+            all_keys = json.load(f)
+            return all_keys.get(tag, [])
+    except:
+        return []
 
-def match_tags(text, tags):
-    return [t for t in tags if t.lower() in text.lower()]
+def semantic_filter(files, keywords):
+    reflections = []
 
-def scan_semantics(scan_data, vocab):
-    results = []
-    keyword_map = vocab.get("keywords", {})
-    priority = vocab.get("priority_tags", [])
-
-    for category, files in scan_data.items():
-        for file in files:
-            name = Path(file).name
-            match = match_keywords(name, keyword_map)
-            tags = match_tags(name, priority)
-            if match or tags:
-                results.append({
-                    "file": file,
-                    "themes": match,
-                    "tags": tags,
-                    "original_type": category
+    for ftype, paths in files.items():
+        for path in paths:
+            path_lower = path.lower()
+            matched = [kw for kw in keywords if kw in path_lower]
+            if matched:
+                reflections.append({
+                    "file": path,
+                    "type": ftype,
+                    "matched_keywords": matched
                 })
-    return results
+
+    return reflections
 
 def main():
-    scan = load_json(scan_path)
-    vocab = load_json(themes_path)
-    if not scan or not vocab:
-        return
+    scan = load_scan()
+    tag = scan.get("focus", "multi")
+    files = scan.get("files", {})
+    keywords = load_keywords(tag)
 
-    print("🔍 Semantic scan started...")
-    annotated = scan_semantics(scan, vocab)
+    print(f"\n🧠 Verobrix Semantic — Focus: {tag}")
+    print(f"🔍 Keywords: {', '.join(keywords) if keywords else 'None'}")
 
-    with open(output_path, "w") as f:
-        json.dump(annotated, f, indent=2)
-    print(f"🧠 Semantic output → {output_path}")
-    print(f"🗂️ Annotated {len(annotated)} files")
+    reflections = semantic_filter(files, keywords)
+
+    payload = {
+        "tag": tag,
+        "timestamp": scan.get("timestamp", ""),
+        "keywords_used": keywords,
+        "files_matched": len(reflections),
+        "reflections": reflections
+    }
+
+    try:
+        with open(OUTPUT, "w") as f:
+            json.dump(payload, f, indent=2)
+        print(f"\n✅ Semantic reflection saved: {OUTPUT}")
+    except Exception as e:
+        print(f"⚠️ Failed to save reflection: {e}")
 
 if __name__ == "__main__":
     main()

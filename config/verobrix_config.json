@@ -1,23 +1,49 @@
 {
+  "device_identity": "mobile",
   "scan_paths": {
     "mobile": [
       "/storage/emulated/0/",
       "/sdcard/",
       "/data/media/0/",
-      "/data/data/com.termux/files/home/Downloads/"
+      "/data/data/com.termux/files/home/"
     ],
     "desktop": [
       "/mnt/storage/",
       "/media/salvage_drive/",
-      "/home/sirrobert/vaults/"
+      "/home/verobrix/vault/",
+      "/home/verobrix/Documents/"
+    ]
+  },
+  "exclude_paths": {
+    "mobile": [
+      "/data/dalvik-cache/",
+      "/data/vendor/",
+      "/data/data/com.android.systemui/",
+      "/data/data/com.termux/cache/"
+    ],
+    "desktop": [
+      "/proc/",
+      "/sys/",
+      "/var/lib/",
+      "/var/run/"
     ]
   },
   "file_types": {
     "images": [".png", ".jpg", ".jpeg", ".gif", ".bmp"],
-    "scripts": [".sh", ".py", ".js", ".bat"],
+    "scripts": [".py", ".sh", ".bat"],
     "documents": [".txt", ".md", ".pdf", ".docx"],
     "archives": [".zip", ".tar", ".gz", ".rar", ".7z"],
-    "logs": [".log", ".out", ".trace"],
+    "logs": [".log", ".out"],
     "configs": [".json", ".yaml", ".yml", ".ini"]
+  },
+  "scan_settings": {
+    "max_file_size_mb": 100,
+    "skip_hidden": true,
+    "log_skipped": true
+  },
+  "cognition": {
+    "enable_semantic": true,
+    "reflect_across_devices": true,
+    "log_environment": true
   }
 }

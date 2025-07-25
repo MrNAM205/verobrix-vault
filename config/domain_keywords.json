@@ -1,0 +1,7 @@
+{
+  "energy": ["solar", "voltage", "battery", "generator", "inverter", "amp", "dc", "ac", "load", "circuit"],
+  "legal": ["contract", "liability", "statute", "case", "jurisdiction", "law", "defense", "plaintiff", "clause", "regulation"],
+  "financial": ["invoice", "ledger", "budget", "tax", "audit", "currency", "expense", "debt", "receipt", "transaction"],
+  "salvage": ["motor", "pcb", "chassis", "reclaimed", "scrap", "capacitor", "relay", "fuse", "gearbox", "housing"],
+  "personal": ["diary", "journal", "dream", "note", "memoir", "memory", "letter", "reflection", "thought", "private"]
+}
